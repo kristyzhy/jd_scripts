@@ -187,7 +187,7 @@ function requireConfig() {
 
     try {
       let options = {
-        "url": `https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jxnc.txt`,
+        "url": ``,
         "headers": {
           "Accept": "application/json,text/plain, */*",
           "Content-Type": "application/x-www-form-urlencoded",
@@ -527,7 +527,7 @@ function getAssistUser() {
   return new Promise(resolve => {
     try {
       $.get({
-        url: `https://api.ninesix.cc/api/jx-nc?active=${$.info.active}`,
+        url: ``,
         timeout: 10000
       }, async (err, resp, _data) => {
         try {
