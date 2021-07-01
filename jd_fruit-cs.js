@@ -97,9 +97,9 @@ async function jdFruit() {
       if ($.farmInfo.treeState === 2 || $.farmInfo.treeState === 3) {
         option['open-url'] = urlSchema;
         $.msg($.name, ``, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看\n点击弹窗即达`, option);
-        
+        let allFinishedMessage = `${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
         if ($.isNode()) {
-          let allFinishedMessage = `${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒?】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
+          
           notifyMsg += `${allFinishedMessage}\n\n`
           // await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`);
 
@@ -298,7 +298,7 @@ async function doTenWater() {
     if (isFruitFinished) {
       option['open-url'] = urlSchema;
       $.msg($.name, ``, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看\n点击弹窗即达`, option);
-      let allFinishedMessage = `${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒?】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
+      let allFinishedMessage = `${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
       $.done();
       if ($.isNode()) {
         notifyMsg += `${allFinishedMessage}\n\n`
@@ -424,7 +424,7 @@ async function doTenWaterAgain() {
     if (isFruitFinished) {
       option['open-url'] = urlSchema;
       $.msg($.name, ``, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看\n点击弹窗即达`, option);
-      let allFinishedMessage = `${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒?】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
+      let allFinishedMessage = `${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
       $.done();
       if ($.isNode()) {
         notifyMsg += `${allFinishedMessage}\n\n`
@@ -454,7 +454,7 @@ async function doTenWaterAgain() {
     if (isFruitFinished) {
       option['open-url'] = urlSchema;
       $.msg($.name, ``, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看\n点击弹窗即达`, option);
-      let allFinishedMessage = `${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒?】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
+      let allFinishedMessage = `${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
       $.done();
       if ($.isNode()) {
         notifyMsg += `${allFinishedMessage}\n\n`
