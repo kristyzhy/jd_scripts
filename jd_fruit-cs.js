@@ -24,7 +24,7 @@ cron "5 6-18/6 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/maste
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
 */
 const $ = new Env('东东农场');
-let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, newShareCodes, allMessage = '', notifyMsg = '';
+let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, notify1, newShareCodes, allMessage = '', notifyMsg = '';
 //助力好友分享码(最多3个,否则后面的助力失败),原因:京东农场每人每天只有3次助力机会
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
@@ -73,7 +73,7 @@ const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%2
   }
   if ($.isNode() && allMessage && $.ctrTemp) {
     await notify.sendNotify(`${$.name}`, `${allMessage}`)
-    await notify.sendNotify(`${$.name}`, `${notifyMsg}`)
+    await notify1.sendNotify(`${$.name}`, `${notifyMsg}`)
   }
 })()
     .catch((e) => {
@@ -99,7 +99,7 @@ async function jdFruit() {
         $.msg($.name, ``, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看\n点击弹窗即达`, option);
         
         if ($.isNode()) {
-          let allFinishedMessage = `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
+          let allFinishedMessage = `【账号】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取`
           notifyMsg += `${allFinishedMessage}\n\n`
           // await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`);
 
@@ -301,7 +301,7 @@ async function doTenWater() {
       
       $.done();
       if ($.isNode()) {
-         let allFinishedMessage = `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
+         let allFinishedMessage = `【账号】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取`
          notifyMsg += `${allFinishedMessage}\n\n`
         // await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}水果已可领取`, `京东账号${$.index} ${$.nickName}\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
@@ -428,7 +428,7 @@ async function doTenWaterAgain() {
       
       $.done();
       if ($.isNode()) {
-        let allFinishedMessage = `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
+        let allFinishedMessage = `【账号】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取`
          notifyMsg += `${allFinishedMessage}\n\n`
         // await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `京东账号${$.index} ${$.nickName}\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
@@ -459,7 +459,7 @@ async function doTenWaterAgain() {
       
       $.done();
       if ($.isNode()) {
-         let allFinishedMessage = `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`
+         let allFinishedMessage = `【账号】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取`
          notifyMsg += `${allFinishedMessage}\n\n`
         // await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `京东账号${$.index} ${$.nickName}\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
@@ -1289,6 +1289,7 @@ function requireConfig() {
   return new Promise(resolve => {
     console.log('开始获取配置文件\n')
     notify = $.isNode() ? require('./sendNotify') : '';
+    notify1 = $.isNode() ? require('./sendNotify.js') : '';
     //Node.js用户请在jdCookie.js处填写京东ck;
     const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
     const jdFruitShareCodes = $.isNode() ? require('./jdFruitShareCodes.js') : '';
