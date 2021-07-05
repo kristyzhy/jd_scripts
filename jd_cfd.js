@@ -102,7 +102,7 @@ $.appId = 10009;
       console.log(`账号${$.UserName} 去参加 ${id} 寻宝大作战`)
       await joinGroup(id)
       if (!$.canHelp) break
-      await $.wait(1000 * 10)
+      await $.wait(1000 * 5)
     }
     if (!$.canHelp) continue
     console.log(`\n\n寻宝大作战，助力作者\n`);
@@ -110,7 +110,7 @@ $.appId = 10009;
       console.log(`账号${$.UserName} 去参加寻宝大作战 ${id} 等待10秒`)
       await joinGroup(id)
       if (!$.canHelp) break
-      await $.wait(1000 * 10)
+      await $.wait(1000 * 5)
     }
   }
   await showMsg();
@@ -122,44 +122,44 @@ async function cfd() {
   try {
     const beginInfo = await getUserInfo();
 
-    await $.wait(2000);
+    await $.wait(1537);
     await querySignList();
 
-    await $.wait(3000);
+    await $.wait(1537);
     await getMoney();
 
     //日常任务
-    await $.wait(3000);
+    await $.wait(1537);
     await getTaskList(0);
-    await $.wait(3000);
+    await $.wait(1537);
     await browserTask(0);
 
     //寻宝
-    await $.wait(3000);
+    await $.wait(1537);
     await treasureHunt();
 
     //偷财富
-    await $.wait(3000);
+    await $.wait(1537);
     await friendCircle();
 
     //成就任务
-    await $.wait(3000);
+    await $.wait(1537);
     await getTaskList(1);
-    await $.wait(3000);
+    await $.wait(1537);
     await browserTask(1);
 
     //抽奖
-    await $.wait(3000);
+    await $.wait(1537);
     await funCenterState();
 
     //领取寻宝宝箱
-    await $.wait(3000);
+    await $.wait(1537);
     await openPeriodBox();
 
     //出岛寻宝大作战
-    await $.wait(3000);
+    await $.wait(1500);
     await submitGroupId();
-    await $.wait(3000);
+    await $.wait(1500);
 
     // const endInfo = await getUserInfo(false);
     await helpFriend()
@@ -182,10 +182,10 @@ function helpFriend() {
     for (let id of $.newShareCodes.filter(vo=> !!vo && !vo.includes("GroupId"))) {
       console.log(`去助力好友 【${id}】`)
       if (token) await createSuperAssistUser(id);
-      await $.wait(10000);
+      await $.wait(3000);
       await createAssistUser(id);
       if (!$.canHelp) break
-      await $.wait(12000);
+      await $.wait(3000);
     }
     // if (token) {
     //   $.canHelp = true
@@ -228,7 +228,7 @@ function getAuthorShareCode(url) {
         resolve();
       }
     })
-    await $.wait(10000)
+    await $.wait(5000)
     resolve();
   })
 }
@@ -358,19 +358,19 @@ async function getMoney() {
   }
   for (const _key of Object.keys($.info.SceneList)) {
     //领取自产财富
-    await $.wait(2000);
+    await $.wait(1537);
     await getMoney_dwSource_1(_key, sceneList);
     //领取普通助力的财富
     const employeeList = eval('(' + JSON.stringify(sceneList[_key].EmployeeList) + ')');
     if (employeeList !== "") {
       for (var key of Object.keys(employeeList)) {
-        await $.wait(2000);
+        await $.wait(1537);
         await getMoney_dwSource_2(_key, sceneList, key);
       }
     }
     //领取超级助力财富
     // console.log(`开始领取超级助力财富,等待2秒`)
-    await $.wait(2000);
+    await $.wait(1537);
     if (token) await getMoney_dwSource_3(_key, sceneList);
     await employeeAward(_key)
   }
@@ -539,7 +539,7 @@ function employeeAward(_key) {
           if (iRet !== 0) {
             return
           }
-          await $.wait(2 * 1000)
+          await $.wait(1537)
           await employeeAward(_key)
         }
       } catch (e) {
@@ -565,7 +565,7 @@ function friendCircle() {
           for (moment of MomentList) {
             if (moment.strShareId !== strShareId && moment.dwAccessMoney > 0) {
               await queryFriendIsland(moment.strShareId);
-              await $.wait(3000);
+              await $.wait(1537);
             }
           }
         }
@@ -595,7 +595,7 @@ function queryFriendIsland(strShareId,){
                 const sceneIds = Object.keys(SceneList);
                 for (sceneId of sceneIds) {
                   await stealMoney(strShareId,sceneId,strFriendNick,sceneList[sceneId].strSceneName);
-                  await $.wait(3000);
+                  await $.wait(1537);
                 }
               }
             }
@@ -639,7 +639,7 @@ async function treasureHunt() {
       const currentTm = Math.round(new Date() / 1000);
       if( currentTm > ddwColdEndTm ) {
         await doTreasureHunt(strIndex);
-        await $.wait(3000);
+        await $.wait(1537);
       } else {
         $.log(`\n🎁寻宝：宝藏冷却中，请等待冷却完毕`);
       }
@@ -731,12 +731,12 @@ function browserTask(taskType) {
           $.log(`\n开始第${i + 1}个【📆日常任务】：${taskinfo.taskName}`);
           const status = [true, true];
           for (let i = 0; i < times; i++) {
-            await $.wait(3000);
+            await $.wait(1537);
             if (status[0]) {
               //做任务
               status[0] = await doTask(taskinfo);
             }
-            await $.wait(3000);
+            await $.wait(1537);
             if (status[1]) {
               //领取奖励
               status[1] = await awardTask(0, taskinfo);
@@ -755,7 +755,7 @@ function browserTask(taskType) {
           if(taskinfo.dwAwardStatus === "0"){
             $.log(`\n${taskinfo.strTaskDescr}【领成就奖励】：该成就任务未达到门槛}`);
           } else {
-            await $.wait(3000);
+            await $.wait(1537);
             //领奖励
             await awardTask(1, taskinfo);
           }
@@ -862,7 +862,7 @@ function funCenterState() {
         } else {
           const {  SlotMachine: { ddwConfVersion, dwFreeCount, strCouponPool, strGoodsPool } = {}, iRet, sErrMsg } = JSON.parse(data);
           if(dwFreeCount == 1) {
-            await $.wait(3000);
+            await $.wait(1537);
             await soltMachine(strCouponPool,strGoodsPool,ddwConfVersion);
           }
         }
