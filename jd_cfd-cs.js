@@ -103,7 +103,7 @@ $.appId = 10009;
       console.log(`账号${$.UserName} 去参加 ${id} 寻宝大作战`)
       await joinGroup(id)
       if (!$.canHelp) break
-      await $.wait(1000 * 1)
+      await $.wait(1000 * 10)
     }
     if (!$.canHelp) continue
     console.log(`\n\n寻宝大作战，助力作者\n`);
@@ -111,7 +111,7 @@ $.appId = 10009;
       console.log(`账号${$.UserName} 去参加寻宝大作战 ${id} 等待10秒`)
       await joinGroup(id)
       if (!$.canHelp) break
-      await $.wait(1000 * 1)
+      await $.wait(1000 * 10)
     }
   }
   await showMsg();
@@ -158,9 +158,9 @@ async function cfd() {
     //await openPeriodBox();
 
     //出岛寻宝大作战
-    await $.wait(1000);
+    await $.wait(2000);
     await submitGroupId();
-    await $.wait(1000);
+    await $.wait(2000);
 
     // const endInfo = await getUserInfo(false);
     //await helpFriend()
