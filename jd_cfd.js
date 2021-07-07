@@ -83,7 +83,7 @@ $.appId = 10009;
       }
 
       token = await getJxToken()
-      // console.log(`token：${JSON.stringify(token)}`)
+      console.log(`\n【京东账号${$.index}（${$.UserName}）的京喜token好友互助码】${JSON.stringify(token)}\n`)
       $.allTask = []
       $.info = {}
       await shareCodesFormat()
