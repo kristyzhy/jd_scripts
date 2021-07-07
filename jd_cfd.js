@@ -83,6 +83,9 @@ $.appId = 10009;
       }
 
       token = await getJxToken()
+      let pin = {pin:$.UserName};
+      var token = { ...token, ...pin };
+      
       console.log(`\n【京东账号${$.index}（${$.UserName}）的京喜token好友互助码】${JSON.stringify(token)}\n`)
       $.allTask = []
       $.info = {}
