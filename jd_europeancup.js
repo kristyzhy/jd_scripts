@@ -60,19 +60,32 @@ $.shareuuid = "" //俺的助力码
                     continue
                 }
                 await genToken()
+                await $.wait(2000);
                 await getActCk()
+                await $.wait(2000);
                 await getToken2()
+                await $.wait(2000);
                 await getMyPin()
+                await $.wait(2000);
                 await adlog()
+                await $.wait(2000);
                 await getUserInfo()
+                await $.wait(2000);
                 await getUid()
+                await $.wait(2000);
                 if ($.cando) {
                     await exchange(cupExid) //兑换
+                    await $.wait(2000);
                     await exchange(cupExid) //兑换
+                    await $.wait(2000);
                     await exchange(cupExid) //兑换
+                    await $.wait(2000);
                     await exchange(cupExid) //兑换
+                    await $.wait(2000);
                     await exchange(cupExid) //兑换
+                    await $.wait(2000);
                     await getinfo()
+                    await $.wait(2000);
                     taskList = $.taskList
                     for (j = 0; j < taskList.length; j++) {
                         task = taskList[j]
