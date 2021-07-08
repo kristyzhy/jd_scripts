@@ -87,28 +87,36 @@ $.shareuuid = "" //俺的助力码
                     await getinfo()
                     await $.wait(2000);
                     taskList = $.taskList
+                    await $.wait(2000);
                     for (j = 0; j < taskList.length; j++) {
                         task = taskList[j]
                         console.log(task.taskname)
                         await dotask(task.taskid, task.params)
+                        await $.wait(2000);
                         if (task.taskid == "scanactive") {
                             for (m = 36; m < 41; m++) {
                                 await dotask(task.taskid, m)
+                                await $.wait(2000);
                             }
                         } else if (task.taskid == "scansku") {
                             await getproduct()
                             for (l = 0; l < $.plist.length; l++) {
                                 console.log("去浏览商品 :" + $.plist[l].venderId)
                                 await writePersonInfo($.plist[l].venderId)
+                                await $.wait(2000);
                                 await dotask(task.taskid, $.plist[l].id)
+                                await $.wait(2000);
                             }
                         } else {
                             await dotask(task.taskid, task.params)
+                            await $.wait(2000);
                         }
 
                     }
                     await exchange(38) //兑换10豆
+                    await $.wait(2000);
                     await getinfo()
+                    await $.wait(2000);
 
                     message += `【京东账号${$.index}】${$.nickName || $.UserName}\n${$.cow} \n ${$.exchange}\n`
                 } else {
