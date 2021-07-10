@@ -428,7 +428,6 @@ async function getSuccessList() {
 async function showMsg() {
 	if ($.successList.length>0) {	
 	let message = `京东账号${$.index} ${$.nickName || $.UserName}\n🎉 本次申请：${$.totalTry}/${$.totalGoods}个商品🛒\n🎉 ${$.successList.length}个商品待领取🤩\n🎉 结束原因：${$.stopMsg}`
-	}
 	if (!args.jdNotify || args.jdNotify === 'false') {
 		$.msg($.name, ``, message, {
 			"open-url": 'https://try.m.jd.com/user'
@@ -437,6 +436,8 @@ async function showMsg() {
 	} else {
 		console.log(message)
 	}
+		}
+
 }
 
 function taskurl(url, goodId) {
