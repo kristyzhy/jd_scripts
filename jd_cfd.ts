@@ -42,7 +42,7 @@ let UserName: string, index: number, isLogin: boolean, nickName: string
      */
 
 
-    // res = await api('story/SpecialUserOper',jd_cfd.ts
+    // res = await api('story/SpecialUserOper',
     //   '_cfd_t,bizCode,ddwTriggerDay,dwEnv,dwType,ptag,source,strStoryId,strZone,triggerType',
     //   {strStoryId: 'stroy_1626065998453014_1', dwType: '2', triggerType: 0, ddwTriggerDay: 1626019200})
     // console.log('船到:', res)
