@@ -145,6 +145,12 @@ function index(info=false) {
                 'shareDate': data.data.result.shareDate
               }
               $.shareDate = data.data.result.shareDate;
+              const submitCodeRes = await submitCode();
+              if (submitCodeRes && submitCodeRes.code === 200) {
+                console.log(`💰签到领现金-互助码提交成功！💰`);
+              }else if (submitCodeRes.code === 300) {
+                console.log(`💰签到领现金-互助码已提交！💰`);
+              }
               // $.log(`shareDate: ${$.shareDate}`)
               // console.log(helpInfo)
               for(let task of data.data.result.taskInfos){
@@ -346,6 +352,28 @@ function showMsg() {
     } else {
       $.log(`京东账号${$.index}${$.nickName}\n${message}`);
     }
+    resolve()
+  })
+}
+function submitCode() {
+    return new Promise(async resolve => {
+    $.get({url: `http://www.helpu.cf/jdcodes/submit.php?code=${myInviteCode}&type=cash`, timeout: 10000}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+    await $.wait(5000);
     resolve()
   })
 }
