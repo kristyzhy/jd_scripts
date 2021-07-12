@@ -48,6 +48,7 @@ const inviteCodes = [
   '',
   ''
 ];
+let myInviteCode;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 $.tuanIds = [];
 $.appId = 10001;
@@ -596,6 +597,13 @@ function userInfo() {
                 console.log(`当前电力：${data.user.electric}`)
                 console.log(`当前等级：${data.user.currentLevel}`)
                 console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data.user.encryptPin}`);
+                myInviteCode = data.user.encryptPin;
+                const submitCodeRes = await submitCode(data.user.encryptPin);
+                if (submitCodeRes && submitCodeRes.code === 200) {
+                  console.log(`🏭京喜工厂-互助码提交成功！🏭`);
+                }else if (submitCodeRes.code === 300) {
+                  console.log(`🏭京喜工厂-互助码已提交！🏭`);
+                }
                 console.log(`已投入电力：${production.investedElectric}`);
                 console.log(`所需电力：${production.needElectric}`);
                 console.log(`生产进度：${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%`);
