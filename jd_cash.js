@@ -141,10 +141,11 @@ function index(info=false) {
               $.signMoney = data.data.result.signMoney;
               // console.log(`您的助力码为${data.data.result.inviteCode}`)
               console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data.data.result.inviteCode}\n`);
-              let helpInfo = {
+             let helpInfo = {
                 'inviteCode': data.data.result.inviteCode,
                 'shareDate': data.data.result.shareDate
               }
+              myInviteCode = data.data.result.inviteCode;
               $.shareDate = data.data.result.shareDate;
               const submitCodeRes = await submitCode();
               if (submitCodeRes && submitCodeRes.code === 200) {
