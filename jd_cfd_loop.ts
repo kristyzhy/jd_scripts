@@ -42,7 +42,8 @@ let UserName: string, index: number, isLogin: boolean, nickName: string
 function speedUp(stk: string) {
   return new Promise(async resolve => {
     let url: string = `https://m.jingxi.com/jxbfd/user/SpeedUp?strZone=jxbfd&bizCode=jxbfd&source=jxbfd&dwEnv=7&_cfd_t=${Date.now()}&ptag=&strBuildIndex=food&_ste=1&_=${Date.now()}&sceneval=2&_stk=${encodeURIComponent(stk)}`
-    url += '&h5st=' + decrypt(stk, url)
+    url += '&h5st=' + decrypt(stk, url)    await wait(10000)
+
     let {data} = await axios.get(url, {
       headers: {
         'Host': 'm.jingxi.com',
