@@ -94,7 +94,7 @@ async function main() {
     $.msg($.name, '【提示】请先获取来客有礼宠汪汪token', "iOS用户微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token");
     // return;
   }
-  await getFriendPins();
+  //await getFriendPins();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       $.validate = '';
@@ -161,8 +161,8 @@ async function getToken() {
       $.msg($.name, '更新Token: 成功🎉', ``);
       console.log(`\nToken，${LKYLToken}\n`)
       $.http.post({
-        //url: `http://share.turinglabs.net/api/v3/create/sharecode/`,
-        url: ``,
+        url: `http://share.turinglabs.net/api/v3/create/sharecode/`,
+        //url: ``,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           "activity_name": "joy",
@@ -226,8 +226,8 @@ async function getToken() {
 }
 function readToken() {
   return new Promise(resolve => {
-    //$.get({url: `http://share.turinglabs.net/api/v3/joy/query/1/`, 'timeout': 10000}, (err, resp, data) => {
-    $.get({url: ``, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `http://share.turinglabs.net/api/v3/joy/query/1/`, 'timeout': 10000}, (err, resp, data) => {
+    //$.get({url: ``, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
