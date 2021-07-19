@@ -161,7 +161,8 @@ async function getToken() {
       $.msg($.name, '更新Token: 成功🎉', ``);
       console.log(`\nToken，${LKYLToken}\n`)
       $.http.post({
-        url: `http://share.turinglabs.net/api/v3/create/sharecode/`,
+        //url: `http://share.turinglabs.net/api/v3/create/sharecode/`,
+        url: ``,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           "activity_name": "joy",
@@ -225,7 +226,8 @@ async function getToken() {
 }
 function readToken() {
   return new Promise(resolve => {
-    $.get({url: `http://share.turinglabs.net/api/v3/joy/query/1/`, 'timeout': 10000}, (err, resp, data) => {
+    //$.get({url: `http://share.turinglabs.net/api/v3/joy/query/1/`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: ``, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -519,7 +521,8 @@ function getRandomArrayElements(arr, count) {
 function getFriendPins() {
   return new Promise(resolve => {
     $.get({
-      url: "https://cdn.jsdelivr.net/gh/gitupdate/friendPin@main/friendPins.json",
+      //url: "https://cdn.jsdelivr.net/gh/gitupdate/friendPin@main/friendPins.json",
+      url: "",
       headers:{
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       },
