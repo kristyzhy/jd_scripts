@@ -234,7 +234,7 @@ async function zhuLi() {
             }
             try {
                 await $.http.get({
-                    url: 'http://192.168.1.Gecko:5678/queryJddjCode',
+                    url: 'http://192.168.1.40:5678/queryJddjCode',
                     timeout: 20000
                 }).then(response => {
                     codestr += response.body
