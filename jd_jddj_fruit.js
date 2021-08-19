@@ -3,6 +3,7 @@ let ckPath = './jdCookie.js';//ck路径,环境变量:JDDJ_CKPATH
 const $ = new API("jd_jddj_fruit");
 
 
+//v9.4
 let thiscookie = '',
     deviceid = '',
     nickname = '';
@@ -35,7 +36,7 @@ waterNum = 0, waterTimes = 0, shareCode = '', hzstr = '', msgStr = '';
     if (!$.env.isNode) isNotify = $.read('#jddj_isNotify');
     else notify = require('./sendNotify');
     let accountNum = cookies.length > Math.sqrt(400) ? Math.sqrt(400) : cookies.length;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < accountNum; i++) {
         console.log('\r\n★★★★★开始执行第' + (i + 1) + '个账号,共' + cookies.length + '个账号★★★★★');
         thiscookie = cookies[i];
         if (!thiscookie) continue;
@@ -101,12 +102,14 @@ waterNum = 0, waterTimes = 0, shareCode = '', hzstr = '', msgStr = '';
         notify.sendNotify('京东到家果园', '❌失败! 原因:' + e + '!')
     }
 }).finally(() => {
-$.done()
+    $.done()
 });
 async function userinfo() {
     return new Promise(async resolve => {
         try {
+            let time = Math.round(new Date());
             let option = urlTask('https://daojia.jd.com/client?channel=wx_xcx&platform=5.0.0&platCode=mini&mpChannel=wx_xcx&appVersion=8.10.5&xcxVersion=8.10.1&appName=paidaojia&functionId=mine%2FgetUserAccountInfo&isForbiddenDialog=false&isNeedDealError=false&isNeedDealLogin=false&body=%7B%22cityId%22%3A' + cityid + '%2C%22fromSource%22%3A%225%22%7D&afsImg=&lat_pos=' + lat + '&lng_pos=' + lng + '&lat=' + lat + '&lng=' + lng + '&city_id=' + cityid + '&deviceToken=' + deviceid + '&deviceId=' + deviceid + '&deviceModel=appmodel&business=&traceId=' + deviceid + '1628044517506&channelCode=', '');
+            option.url += '&' + option.body;
             let code = 1;
             await $.http.get(option).then(response => {
                 let data = JSON.parse(response.body);
@@ -130,7 +133,9 @@ async function userinfo() {
 async function taskList() {
     return new Promise(async resolve => {
         try {
-            let option = urlTask('https://daojia.jd.com/client?_jdrandom=' + Math.round(new Date()) + '&functionId=task%2Flist&isNeedDealError=true&body=%7B%22modelId%22%3A%22M10007%22%2C%22plateCode%22%3A1%7D&channel=ios&platform=6.6.0&platCode=h5&appVersion=6.6.0&appName=paidaojia&deviceModel=appmodel&traceId=' + deviceid + '&deviceToken=' + deviceid + '&deviceId=' + deviceid, '');
+            let time = Math.round(new Date());
+            let option = urlTask('https://daojia.jd.com/client?_jdrandom=' + time + '&_funid_=task/list', 'functionId=task%2Flist&isNeedDealError=true&body=%7B%22modelId%22%3A%22M10007%22%2C%22plateCode%22%3A4%7D&lat=' + lat + '&lng=' + lng + '&lat_pos=' + lat + '&lng_pos=' + lng + '&city_id=' + cityid + '&channel=rn&platform=6.6.0&platCode=h5&appVersion=6.6.0&appName=paidaojia&deviceModel=appmodel&traceId=' + deviceid + time + '&deviceToken=' + deviceid + '&deviceId=' + deviceid + '&_jdrandom=' + time + '&_funid_=task%2Flist');
+            option.url += '&' + option.body;
             $.http.get(option).then(response => {
                 let data = JSON.parse(response.body);
                 resolve(data)
@@ -226,7 +231,7 @@ async function zhuLi() {
                 codestr = '';
             if (new Date().getHours() < 8) {
                 await $.http.get({
-                    url: 'https://gitee.com/kristyzhy/JDDJ/raw/main/sharecode.js'
+                    url: ''
                 }).then(response => {
                     codestr = response.body
                 });
@@ -234,7 +239,7 @@ async function zhuLi() {
             }
             try {
                 await $.http.get({
-                    url: 'http://192.168.1.40:5678/queryJddjCode',
+                    url: '',
                     timeout: 20000
                 }).then(response => {
                     codestr += response.body
@@ -321,6 +326,11 @@ const do_tasks = [307, 901, 1102, 1105, 1103, 0, 1101];
 async function runTask(tslist) {
     return new Promise(async resolve => {
         try {
+            if (!tslist.result.taskInfoList) {
+                console.log('\n任务列表获取失败...');
+                resolve();
+                return
+            }
             for (let index = 0; index < tslist.result.taskInfoList.length; index++) {
                 const item = tslist.result.taskInfoList[index];
                 if (item.status == 3 || item.status == 2) {
@@ -508,9 +518,7 @@ function urlTask(url, body) {
     let option = {
         url: url,
         headers: {
-            'Host': 'daojia.jd.com',
             'Content-Type': 'application/x-www-form-urlencoded;',
-            'Origin': 'https://daojia.jd.com',
             'Cookie': thiscookie,
             'Connection': 'keep-alive',
             'Accept': '*/*',
@@ -530,7 +538,7 @@ async function taskLoginUrl(deviceid, thiscookie) {
                     "Cookie": 'deviceid_pdj_jd=' + deviceid + ';' + thiscookie + ';',
                     "Host": "daojia.jd.com",
                     'Content-Type': 'application/x-www-form-urlencoded;',
-                    "User-Agent": 'jdapp;iPhone;10.0.10;14.1;311fc185ed97a0392e35657dfe2a321664170965;network/wifi;model/iPhone11,6;appBuild/167764;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1'
+                    "User-Agent": 'jdapp;iPhone;10.0.10;14.1;' + deviceid + ';network/wifi;model/iPhone11,6;appBuild/167764;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1'
                 }
             };
             let ckstr = '';
