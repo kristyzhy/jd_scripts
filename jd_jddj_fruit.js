@@ -35,7 +35,7 @@ waterNum = 0, waterTimes = 0, shareCode = '', hzstr = '', msgStr = '';
     }
     if (!$.env.isNode) isNotify = $.read('#jddj_isNotify');
     else notify = require('./sendNotify');
-    let accountNum = cookies.length > Math.sqrt(400) ? Math.sqrt(400) : cookies.length;
+    let accountNum = cookies.length > Math.sqrt(100) ? Math.sqrt(100) : cookies.length;
     for (let i = 0; i < accountNum; i++) {
         console.log('\r\n★★★★★开始执行第' + (i + 1) + '个账号,共' + cookies.length + '个账号★★★★★');
         thiscookie = cookies[i];
