@@ -702,10 +702,15 @@ function invite2() {
 
 function invite() {
   let t = +new Date()
-  let inviterId = [
-    "A0O/8ZgL6NzeaHW19ue46Q==",
-    "OMdUW/RZkCqq9tmIvFPvRobsSQ2VSI33Gc4fOyQ1tOg="
-  ][Math.floor((Math.random() * 2))]
+  //let inviterId = [
+  //  "A0O/8ZgL6NzeaHW19ue46Q==",
+  //  "OMdUW/RZkCqq9tmIvFPvRobsSQ2VSI33Gc4fOyQ1tOg="
+ // ][Math.floor((Math.random() * 2))]
+  
+    let inviterId = [
+    "A0O/8ZgL6NzeaHW19ue46Q=="
+  ][Math.floor((Math.random() * 1))]
+  
   var headers = {
     'Host': 'api.m.jd.com',
     'accept': 'application/json, text/plain, */*',
