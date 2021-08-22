@@ -1,41 +1,9 @@
 /*
-Last Modified time: 2021-6-6 21:22:37
-宠汪汪邀请助力与赛跑助力脚本，感谢github@Zero-S1提供帮助
-活动入口：京东APP我的-更多工具-宠汪汪
-token时效很短，几个小时就失效了,闲麻烦的放弃就行
-每天拿到token后，可一次性运行完毕即可。
-互助码friendPin是京东用户名，不是昵称（可在京东APP->我的->设置 查看获得）
-token获取途径：
-1、微信搜索'来客有礼'小程序,登陆京东账号，点击底部的'我的'或者'发现'两处地方,即可获取Token，脚本运行提示token失效后，继续按此方法获取即可
-2、或者每天去'来客有礼'小程序->宠汪汪里面，领狗粮->签到领京豆 也可获取Token(此方法每天只能获取一次)
-脚本里面有内置提供的friendPin，如果你没有修改脚本或者BoxJs处填写自己的互助码，会默认给脚本内置的助力。
-
-docker 设置环境变量 JOY_RUN_HELP_MYSELF 为true,则开启账号内部互助.默认关闭(即给脚本作者内置的助力).
-
-[MITM]
-hostname = draw.jdfcloud.com
-
-===========Surge=================
-[Script]
-宠汪汪邀请助力与赛跑助力 = type=cron,cronexp="15 10 * * *",wake-system=1,timeout=3600,script-path=jd_joy_run.js
-宠汪汪助力更新Token = type=http-response,pattern=^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code=, requires-body=1, max-size=0, script-path=jd_joy_run.js
-宠汪汪助力获取Token = type=http-request,pattern=^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId=, max-size=0, script-path=jd_joy_run.js
 
 ===================Quantumult X=====================
 [task_local]
 # 宠汪汪邀请助力与赛跑助力
-15 10 * * * jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
-[rewrite_local]
-# 宠汪汪助力更新Token
-^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code= url script-response-body jd_joy_run.js
-# 宠汪汪助力获取Token
-^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId= url script-request-header jd_joy_run.js
-
-=====================Loon=====================
-[Script]
-cron "15 10 * * *" script-path=jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力
-http-response ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code= script-path=jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力更新Token
-http-request ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId= script-path=jd_joy_run.js, timeout=3600, tag=宠汪汪助力获取Token
+15 10 * * * jd_joy_run.js 
 */
 const $ = new Env('宠汪汪赛跑');
 const zooFaker = require('./utils/JDJRValidator_Pure');
@@ -55,7 +23,6 @@ let invite_pins = ['kristyYun,jd_5c9f1e58f03f3,jd_owojrNUEbmUn,%E6%A2%A8shir,jd_
 let run_pins = ['kristyYun,jd_5c9f1e58f03f3,jd_owojrNUEbmUn,%E6%A2%A8shir,jd_56b6017796376,jd_4368b6f99055c'];
 //friendsArr内置太多会导致IOS端部分软件重启,可PR过来(此处目的:帮别人助力可得30g狗粮)
 let friendsArr = ["kristyYun", "jd_5c9f1e58f03f3", "jd_owojrNUEbmUn", "%E6%A2%A8shir", "jd_56b6017796376", "jd_4368b6f99055c"]
-
 
 
 //IOS等用户直接用NobyDa的jd cookie
@@ -127,7 +94,7 @@ async function main() {
     $.msg($.name, '【提示】请先获取来客有礼宠汪汪token', "iOS用户微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token");
     // return;
   }
-  //await getFriendPins();
+  await getFriendPins();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       $.validate = '';
@@ -146,7 +113,7 @@ async function main() {
           run_pins = run_pins[0].split(',')
           Object.values(jdCookieNode).filter(item => item.match(/pt_pin=([^; ]+)(?=;?)/)).map(item => run_pins.push(decodeURIComponent(item.match(/pt_pin=([^; ]+)(?=;?)/)[1])))
           run_pins = [...new Set(run_pins)];
-          let fixPins = run_pins.splice(run_pins.indexOf('kristyYun'), 1);
+          let fixPins = run_pins.splice(run_pins.indexOf('=kristyYun'), 1);
           fixPins.push(...run_pins.splice(run_pins.indexOf('jd_5c9f1e58f03f3'), 1));
           const randomPins = getRandomArrayElements(run_pins, run_pins.length);
           run_pins = [[...fixPins, ...randomPins].join(',')];
@@ -194,8 +161,8 @@ async function getToken() {
       $.msg($.name, '更新Token: 成功🎉', ``);
       console.log(`\nToken，${LKYLToken}\n`)
       $.http.post({
-        //url: `http://share.turinglabs.net/api/v3/create/sharecode/`,
-        url: ``,
+        url: `http://share.turinglabs.net/api/v3/create/sharecode/`,
+        //url: ``,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           "activity_name": "joy",
@@ -260,6 +227,7 @@ async function getToken() {
 function readToken() {
   return new Promise(resolve => {
     $.get({url: `http://share.turinglabs.net/api/v3/joy/query/1/`, 'timeout': 10000}, (err, resp, data) => {
+    //$.get({url: ``, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -357,7 +325,7 @@ function enterRoom(invitePin) {
     headers['Content-Type'] = "application/json";
     let opt = {
       // url: "//jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5",
-      url: `//draw.jdfcloud.com/common/pet/enterRoom/h5?reqSource=h5&invitePin=${encodeURI(invitePin)}&inviteSource=task_invite&shareSource=weapp&inviteTimeStamp=${Date.now()}&invokeKey=ztmFUCxcPMNyUq0P`,
+       url: `//draw.jdfcloud.com/common/pet/enterRoom/h5?reqSource=h5&invitePin=${encodeURI(invitePin)}&inviteSource=task_invite&shareSource=weapp&inviteTimeStamp=${Date.now()}&invokeKey=ztmFUCxcPMNyUq0P`,
       method: "GET",
       data: {},
       credentials: "include",
@@ -388,7 +356,7 @@ function enterRoom(invitePin) {
 }
 function helpInviteFriend(friendPin) {
   return new Promise((resolve) => {
-    let lkt = new Date().getTime()
+      let lkt = new Date().getTime()
     let lks = $.md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
     headers['lkt'] = lkt;
     headers['lks'] = lks;
@@ -463,7 +431,7 @@ async function run(run_pins) {
 }
 function combatHelp(friendPin) {
   return new Promise(resolve => {
-    let lkt = new Date().getTime()
+      let lkt = new Date().getTime()
     let lks = $.md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
     headers['lkt'] = lkt;
     headers['lks'] = lks;
@@ -506,7 +474,7 @@ function combatHelp(friendPin) {
 }
 function combatDetail(invitePin) {
   return new Promise(resolve => {
-    let lkt = new Date().getTime()
+      let lkt = new Date().getTime()
     let lks = $.md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
     headers['lkt'] = lkt;
     headers['lks'] = lks;
@@ -514,7 +482,7 @@ function combatDetail(invitePin) {
     headers.LKYLToken = $.LKYLToken;
     let opt = {
       // url: "//jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5",
-      url: `//draw.jdfcloud.com/common/pet/combat/detail/v2?help=true&inviterPin=${encodeURI(invitePin)}&reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
+       url: `//draw.jdfcloud.com/common/pet/combat/detail/v2?help=true&inviterPin=${encodeURI(invitePin)}&reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
       method: "GET",
       data: {},
       credentials: "include",
@@ -569,11 +537,12 @@ function getRandomArrayElements(arr, count) {
 function getFriendPins() {
   return new Promise(resolve => {
     $.get({
-      url: "",
+      //url: "https://cdn.jsdelivr.net/gh/gitupdate/friendPin@main/friendPins.json",
+      url: "https://ghproxy.com/https://raw.githubusercontent.com/kristyzhy/jd_scripts/master/friendPins.json",
       headers:{
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       },
-      timeout: 100000}, async (err, resp, data) => {
+      timeout: 10000}, async (err, resp, data) => {
       try {
         if (err) {
           console.log(`getFriendPins::${JSON.stringify(err)}`);
